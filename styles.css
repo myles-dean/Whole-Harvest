@@ -2,7 +2,7 @@ body {
     font-family: Metropolis;
     margin: 0;
     padding: 0;
-    background-color: #F51919;
+    background-color: #50B164;
 }
 
 header {
@@ -39,8 +39,8 @@ main {
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%);
-    min-width: 300px;
-    
+    width: 30%;
+    max-width: 300px;
 }
 
 .slogan{
