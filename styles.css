@@ -35,15 +35,13 @@ main {
 .construction {
     text-align: center;
     color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 90%;
     max-width: 300px;
     box-sizing: border-box;
     padding: 1rem;
+    margin: 2rem auto;
 }
+
 
 
 a {
