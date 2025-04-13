@@ -1,0 +1,266 @@
+:root {
+  --light-yellow-green: #cff07c;
+  --dark-green: #1b3f2f;
+}
+
+.w-layout-blockcontainer {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+@media screen and (max-width: 991px) {
+  .w-layout-blockcontainer {
+    max-width: 728px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .w-layout-blockcontainer {
+    max-width: none;
+  }
+}
+
+.section-resource {
+  background-color: #1b3f2f;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100vh;
+  padding: 10vw 2vw 2vw;
+  display: block;
+  overflow: hidden;
+}
+
+.resource-name__svg {
+  width: 100%;
+  transform: translateY(-2%);
+}
+
+.canvas-matter {
+  width: 100%;
+  margin-bottom: 0;
+  position: absolute;
+  bottom: 0%;
+  left: auto;
+  right: 0%;
+  overflow: hidden;
+}
+
+.canvas-matter__before {
+  padding-top: 100%;
+}
+
+.canvas-matter__target {
+  transform: scale3d(1none, 1none, 1none);
+  transform-style: preserve-3d;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.code-embed {
+  display: none;
+}
+
+.body {
+  color: #cff07c;
+  background-color: #1b3f2f;
+}
+
+.image {
+  max-width: 300px;
+}
+
+.section {
+  width: 100%;
+  height: 500px;
+}
+
+.hamburger-nav__toggle-bar {
+  background-color: #1b3f2f;
+  width: 40%;
+  height: .125em;
+  position: absolute;
+}
+
+.hamburger-nav__li {
+  margin: 0;
+  padding: 15px 0 0;
+  list-style: none;
+}
+
+.hamburger-nav__menu-p {
+  opacity: .5;
+  color: #1b3f2f;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.hamburger-nav {
+  background-color: #fff0;
+  border-radius: 1.5em;
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+.hamburger-nav__group {
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+  pointer-events: auto;
+  transform-origin: 100% 0;
+  flex-flow: column;
+  padding: 2.25em 2.5em 2em 2em;
+  display: flex;
+  position: relative;
+}
+
+.hamburger-nav__p {
+  color: #1b3f2f;
+  white-space: nowrap;
+  margin-bottom: 0;
+  padding-right: 1.25em;
+  font-family: Cormorant Garamond, sans-serif;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.navigation {
+  z-index: 500;
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+}
+
+.hamburger-nav__toggle {
+  pointer-events: auto;
+  cursor: pointer;
+  background-color: #cff07c;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  width: 3.5em;
+  height: 3.5em;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.navigation__dark-bg {
+  opacity: 0;
+  pointer-events: auto;
+  visibility: hidden;
+  background-color: #000;
+  position: absolute;
+  inset: 0;
+}
+
+.hamburger-nav__ul {
+  grid-column-gap: .375em;
+  grid-row-gap: .375em;
+  flex-flow: column;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  display: flex;
+  position: relative;
+}
+
+.hamburger-nav__bg {
+  background-color: #cff07c;
+  border-radius: 1.75em;
+  width: 3.5em;
+  height: 3.5em;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.hamburger-nav__a {
+  color: #131313;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  display: flex;
+}
+
+.hamburger-nav__dot {
+  color: #1b3f2f;
+  background-color: currentColor;
+  border-radius: 50%;
+  flex-shrink: 0;
+  width: .5em;
+  height: .5em;
+}
+
+.code-embed-2 {
+  display: none;
+}
+
+.heading {
+  text-align: center;
+  flex: 0 auto;
+  font-family: Cormorant Garamond, sans-serif;
+  font-size: 4rem;
+  line-height: 4rem;
+}
+
+.container {
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
+
+.image-2 {
+  max-width: 80px;
+  margin-top: 4em;
+}
+
+.button {
+  background-color: var(--light-yellow-green);
+  color: var(--dark-green);
+  border-radius: 20px;
+  margin-top: 2em;
+  margin-left: 2em;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: Cormorant Garamond, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 991px) {
+  .canvas-matter {
+    top: -1px;
+    width: calc(100% + 1px) !important;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .image-2 {
+    max-width: 50px;
+    margin-top: 2em;
+  }
+
+  .button {
+    margin-top: 0;
+    margin-left: 0;
+    position: fixed;
+    top: 1.7em;
+    left: 2em;
+  }
+}
+
+
