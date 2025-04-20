@@ -593,6 +593,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const res = await fetch(form.action, {
             method: 'POST',
             body: data
+            mode: 'no-cors'
           });
           if (!res.ok) throw new Error('Network response was not ok');
           form.style.display = 'none';
