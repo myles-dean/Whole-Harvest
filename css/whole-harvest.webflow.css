@@ -341,7 +341,6 @@
 .vegetables {
   z-index: 1001;
   width: 100%;
-  display: none;
   position: absolute;
   top: 0;
 }
@@ -625,7 +624,6 @@
   grid-template-columns: 1fr 1fr;
   grid-auto-columns: 1fr;
   font-family: Merriweather, serif;
-  display: none;
   position: fixed;
   inset: 0;
   overflow: hidden;
