@@ -576,35 +576,36 @@ document.addEventListener('DOMContentLoaded', function () {
   </section>
   
   <!-- Place this script just before </body> -->
-  <script>
-    (function() {
-      const form = document.getElementById('email-form');
-      const success = form.parentNode.querySelector('.w-form-done');
-      const error   = form.parentNode.querySelector('.w-form-fail');
-  
-      form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        // hide any previous messages
-        success.style.display = 'none';
-        error.style.display   = 'none';
-  
-        const data = new FormData(form);
-        try {
-          const res = await fetch(form.action, {
-            method: 'POST',
-            body: data
-            mode: 'no-cors'
-          });
-          if (!res.ok) throw new Error('Network response was not ok');
-          form.style.display = 'none';
-          success.style.display = 'block';
-          form.reset();
-        } catch (err) {
-          error.style.display = 'block';
-        }
+  <!-- Place this script just before </body> -->
+<script>
+  (function() {
+    const form    = document.getElementById('email-form');
+    const success = form.parentNode.querySelector('.w-form-done');
+    const error   = form.parentNode.querySelector('.w-form-fail');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      success.style.display = 'none';
+      error.style.display   = 'none';
+
+      const data = new FormData(form);
+      fetch(form.action, {
+        method: 'POST',
+        body: data,
+        mode: 'no-cors'           // ◀︎ this makes the request succeed without CORS errors
+      })
+      .then(() => {
+        form.style.display   = 'none';
+        success.style.display = 'block';
+        form.reset();
+      })
+      .catch(() => {
+        error.style.display   = 'block';
       });
-    })();
-  </script>
+    });
+  })();
+</script>
+
   
   
   <div class="code-embed-4 w-embed w-script">
