@@ -467,18 +467,28 @@ document.addEventListener('DOMContentLoaded', function () {
             id="email-form"
             name="email-form"
             data-name="Email Form"
-            action="https://formsubmit.co/myles@mercyroadanderson.com"
+            action="https://formsubmit.co/info@mylesdean.com"
             method="POST"
             class="form w-clearfix"
             data-wf-page-id="67fbb8ae83fe9067318ef6df"
             data-wf-element-id="5e97fb2a-9104-3e98-ad6f-f625c16df154"
             novalidate
           >
-            <!-- disable Formsubmit’s built‑in captcha -->
+            <!-- disable Formsubmit captcha -->
             <input type="hidden" name="_captcha" value="false">
+            <!-- redirect back to your page instead of Formsubmit’s thank-you page -->
+            <input
+              type="hidden"
+              name="_next"
+              value="https://yourdomain.com/#contact"
+            >
             <!-- optional: set a custom email subject -->
-            <input type="hidden" name="_subject" value="New contact from your website">
-            
+            <input
+              type="hidden"
+              name="_subject"
+              value="New contact from your website"
+            >
+  
             <div class="div-block-6">
               <div>
                 <label for="name">Name*</label>
@@ -554,16 +564,47 @@ document.addEventListener('DOMContentLoaded', function () {
             >
           </form>
   
-          <div class="success-message w-form-done">
+          <div class="success-message w-form-done" style="display:none;">
             <div>Thank you! Your submission has been received!</div>
           </div>
-          <div class="error-message w-form-fail">
+          <div class="error-message w-form-fail" style="display:none;">
             <div>Oops! Something went wrong while submitting the form.</div>
           </div>
         </div>
       </div>
     </div>
   </section>
+  
+  <!-- Place this script just before </body> -->
+  <script>
+    (function() {
+      const form = document.getElementById('email-form');
+      const success = form.parentNode.querySelector('.w-form-done');
+      const error   = form.parentNode.querySelector('.w-form-fail');
+  
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        // hide any previous messages
+        success.style.display = 'none';
+        error.style.display   = 'none';
+  
+        const data = new FormData(form);
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: data
+          });
+          if (!res.ok) throw new Error('Network response was not ok');
+          form.style.display = 'none';
+          success.style.display = 'block';
+          form.reset();
+        } catch (err) {
+          error.style.display = 'block';
+        }
+      });
+    })();
+  </script>
+  
   
   <div class="code-embed-4 w-embed w-script">
     <script>
