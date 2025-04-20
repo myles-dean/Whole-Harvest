@@ -463,15 +463,97 @@ document.addEventListener('DOMContentLoaded', function () {
       <h1 class="heading-2">Contact Us</h1>
       <div class="contact-us-container">
         <div class="form-block w-form">
-          <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form w-clearfix" data-wf-page-id="67fbb8ae83fe9067318ef6df" data-wf-element-id="5e97fb2a-9104-3e98-ad6f-f625c16df154">
+          <form
+            id="email-form"
+            name="email-form"
+            data-name="Email Form"
+            action="https://formsubmit.co/info@mylesdean.com"
+            method="POST"
+            class="form w-clearfix"
+            data-wf-page-id="67fbb8ae83fe9067318ef6df"
+            data-wf-element-id="5e97fb2a-9104-3e98-ad6f-f625c16df154"
+            novalidate
+          >
+            <!-- disable Formsubmit’s built‑in captcha -->
+            <input type="hidden" name="_captcha" value="false">
+            <!-- optional: set a custom email subject -->
+            <input type="hidden" name="_subject" value="New contact from your website">
+            
             <div class="div-block-6">
-              <div><label for="name">Name*</label><input class="text-field w-input" maxlength="256" name="name" data-name="Name" placeholder="" type="text" id="name"></div>
-              <div><label for="email">Email*</label><input class="text-field w-input" maxlength="256" name="email" data-name="Email" placeholder="" type="email" id="email" required=""></div>
-              <div><label for="Phone">Phone</label><input class="text-field w-input" maxlength="256" name="Phone" data-name="Phone" placeholder="" type="tel" id="Phone" required=""></div>
-              <div><label for="Company">Company</label><input class="text-field w-input" maxlength="256" name="Company" data-name="Company" placeholder="" type="text" id="Company"></div>
+              <div>
+                <label for="name">Name*</label>
+                <input
+                  class="text-field w-input"
+                  maxlength="256"
+                  name="name"
+                  data-name="Name"
+                  placeholder=""
+                  type="text"
+                  id="name"
+                >
+              </div>
+              <div>
+                <label for="email">Email*</label>
+                <input
+                  class="text-field w-input"
+                  maxlength="256"
+                  name="email"
+                  data-name="Email"
+                  placeholder=""
+                  type="email"
+                  id="email"
+                  required
+                >
+              </div>
+              <div>
+                <label for="Phone">Phone</label>
+                <input
+                  class="text-field w-input"
+                  maxlength="256"
+                  name="Phone"
+                  data-name="Phone"
+                  placeholder=""
+                  type="tel"
+                  id="Phone"
+                  required
+                >
+              </div>
+              <div>
+                <label for="Company">Company</label>
+                <input
+                  class="text-field w-input"
+                  maxlength="256"
+                  name="Company"
+                  data-name="Company"
+                  placeholder=""
+                  type="text"
+                  id="Company"
+                >
+              </div>
             </div>
-            <div><label for="Message">Message*</label><input class="text-field message w-input" maxlength="256" name="Message" data-name="Message" placeholder="" type="text" id="Message" required=""></div><input type="submit" data-wait="Please wait..." class="button form w-button" value="Submit">
+  
+            <div>
+              <label for="Message">Message*</label>
+              <input
+                class="text-field message w-input"
+                maxlength="256"
+                name="Message"
+                data-name="Message"
+                placeholder=""
+                type="text"
+                id="Message"
+                required
+              >
+            </div>
+  
+            <input
+              type="submit"
+              data-wait="Please wait..."
+              class="button form w-button"
+              value="Submit"
+            >
           </form>
+  
           <div class="success-message w-form-done">
             <div>Thank you! Your submission has been received!</div>
           </div>
@@ -482,6 +564,7 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
     </div>
   </section>
+  
   <div class="code-embed-4 w-embed w-script">
     <script>
 function initLoaderThreeSteps() { 
