@@ -45,6 +45,7 @@
 
   <script async src="https://widgets.givebutter.com/latest.umd.cjs?acct=26jEKhn8BEKGlPde&p=webflow"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 
   <style>
     :root {
@@ -96,10 +97,27 @@
       font-size: calc(10vw + 10vh);
       display: flex;
       position: absolute;
-      top: .1em;
-      bottom: auto;
+      top: auto;
+      bottom: .1em;
       left: .23em;
     }
+    /* Falling vegetables canvas (preserved from original) */
+    .vegetables {
+      z-index: 1001;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+    .canvas-matter, .canvas-matter__target {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .canvas-matter canvas { display: block; }
     .loading__number { font-weight: 700; line-height: 1; position: relative; }
     .loading__number-group {
       flex-flow: column;
@@ -164,6 +182,13 @@
         </div>
         <div class="loading__percentage-wrap"><span class="loading__percentage">%</span></div>
       </div>
+    </div>
+  </div>
+
+  <!-- Falling vegetables physics overlay -->
+  <div class="vegetables">
+    <div class="canvas-matter">
+      <div id="canvas-target" class="canvas-matter__target"></div>
     </div>
   </div>
 
@@ -442,8 +467,8 @@
 
   <!-- ============== FOOTER ============== -->
   <footer class="w-full bg-wh-green text-wh-cream border-t border-wh-cream/10 px-8 py-16">
-    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
-      <div class="md:col-span-1">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-start md:justify-between gap-10">
+      <div class="flex-1 max-w-xl">
         <img src="images/Side-Logo.svg" alt="Whole Harvest" class="h-16 mb-4">
         <p class="text-sm text-wh-cream/80">
           <span class="text-wh-orange">©</span>
@@ -452,23 +477,25 @@
           <span class="text-wh-lime">Non-Profit 501(c)(3)</span>
         </p>
       </div>
-      <div>
-        <h4 class="text-xs uppercase tracking-[0.25em] text-wh-lime font-bold mb-4">Pages</h4>
-        <ul class="space-y-2">
-          <li><a href="#home"     class="hover:text-wh-lime transition-colors">Home</a></li>
-          <li><a href="#mission"  class="hover:text-wh-lime transition-colors">Mission</a></li>
-          <li><a href="#services" class="hover:text-wh-lime transition-colors">Services</a></li>
-          <li><a href="#contact"  class="hover:text-wh-lime transition-colors">Contact Us</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="text-xs uppercase tracking-[0.25em] text-wh-orange font-bold mb-4">Links</h4>
-        <ul class="space-y-2">
-          <li><a href="https://givebutter.com/agud5E" target="_blank" rel="noreferrer" class="hover:text-wh-lime transition-colors">Donate</a></li>
-          <li><a href="https://mercyroadanderson.churchcenter.com/groups/outposts/plant-d" target="_blank" rel="noreferrer" class="hover:text-wh-lime transition-colors">PLANT'D</a></li>
-          <li><a href="https://www.instagram.com/wholeharvest2025" target="_blank" rel="noreferrer" class="hover:text-wh-lime transition-colors">Instagram</a></li>
-          <li><span class="text-wh-cream/50">Facebook</span></li>
-        </ul>
+      <div class="flex gap-12 md:gap-16 md:justify-end">
+        <div>
+          <h4 class="text-xs uppercase tracking-[0.25em] text-wh-lime font-bold mb-4">Pages</h4>
+          <ul class="space-y-2">
+            <li><a href="#home"     class="hover:text-wh-lime transition-colors">Home</a></li>
+            <li><a href="#mission"  class="hover:text-wh-lime transition-colors">Mission</a></li>
+            <li><a href="#services" class="hover:text-wh-lime transition-colors">Services</a></li>
+            <li><a href="#contact"  class="hover:text-wh-lime transition-colors">Contact Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs uppercase tracking-[0.25em] text-wh-orange font-bold mb-4">Links</h4>
+          <ul class="space-y-2">
+            <li><a href="https://givebutter.com/agud5E" target="_blank" rel="noreferrer" class="hover:text-wh-lime transition-colors">Donate</a></li>
+            <li><a href="https://mercyroadanderson.churchcenter.com/groups/outposts/plant-d" target="_blank" rel="noreferrer" class="hover:text-wh-lime transition-colors">PLANT'D</a></li>
+            <li><a href="https://www.instagram.com/wholeharvest2025" target="_blank" rel="noreferrer" class="hover:text-wh-lime transition-colors">Instagram</a></li>
+            <li><span class="text-wh-cream/50">Facebook</span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </footer>
@@ -504,7 +531,7 @@
 
     window.addEventListener('load', function () {
       setTimeout(function () {
-        document.querySelectorAll('.loading-container').forEach(el => {
+        document.querySelectorAll('.vegetables, .loading-container').forEach(el => {
           el.style.transition = 'opacity 0.5s ease';
           el.style.opacity = '0';
           el.addEventListener('transitionend', function handler() {
@@ -514,6 +541,68 @@
         });
       }, 4000);
     });
+  </script>
+
+  <!-- Falling 2D vegetables (Matter.js) — preserved from original -->
+  <script>
+    function initFalling2DMatterJS() {
+      const canvas = document.querySelector("#canvas-target");
+      if (!canvas || typeof Matter === 'undefined') return;
+      const canvasWidth = canvas.clientWidth + 2;
+      const canvasHeight = canvas.clientHeight + 2;
+      const wallDepth = canvasWidth / 4;
+      const itemSize = Math.min(canvasWidth, canvasHeight) / 8;
+      const textureSize = 256;
+      const itemScale = itemSize / textureSize;
+      const restitution = 0.75;
+
+      const { Engine, Render, Runner, Bodies, Composite, Mouse, MouseConstraint } = Matter;
+      const engine = Engine.create();
+      engine.world.gravity.y = 2;
+      const render = Render.create({
+        element: canvas, engine: engine,
+        options: { background: 'transparent', wireframes: false, width: canvasWidth, height: canvasHeight, pixelRatio: 2 }
+      });
+
+      const textures = [
+        'images/Tomatoe.png',
+        'images/Brocolli.png',
+        'images/Bell-Pepper.png',
+        'images/Onion.png',
+        'images/Carrot.png'
+      ];
+      let textureIndex = 0;
+      const nextTexture = () => { const t = textures[textureIndex]; textureIndex = (textureIndex + 1) % textures.length; return t; };
+      const rand = (min, max) => Math.random() * (max - min) + min;
+      const min = itemSize / 2, max = canvasWidth - itemSize / 2;
+
+      const createItem = () => {
+        const body = Bodies.rectangle(rand(min, max), itemSize, itemSize, itemSize, {
+          chamfer: { radius: itemSize / 2 },
+          restitution: restitution,
+          render: { sprite: { texture: nextTexture(), xScale: itemScale, yScale: itemScale } }
+        });
+        Composite.add(engine.world, body);
+      };
+
+      const boxBottom = Bodies.rectangle(canvasWidth / 2, canvasHeight + wallDepth, canvasWidth + wallDepth * 4, wallDepth * 2, { isStatic: true });
+      const boxLeft   = Bodies.rectangle(-wallDepth, canvasHeight / 2, wallDepth * 2, canvasHeight, { isStatic: true });
+      const boxRight  = Bodies.rectangle(canvasWidth + wallDepth, canvasHeight / 2, wallDepth * 2, canvasHeight, { isStatic: true });
+      Composite.add(engine.world, [boxBottom, boxLeft, boxRight]);
+
+      Render.run(render);
+      const runner = Runner.create();
+      Matter.Runner.run(runner, engine);
+
+      const repeat = (count, max) => {
+        if (count < max) {
+          createItem();
+          setTimeout(() => repeat(count + 1, max), 100);
+        }
+      };
+      repeat(0, 15);
+    }
+    document.addEventListener('DOMContentLoaded', initFalling2DMatterJS);
   </script>
 
   <!-- Dynamic year -->
