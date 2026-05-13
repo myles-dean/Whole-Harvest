@@ -59,7 +59,7 @@ export function Kinetic() {
               <a href="#home" className="hover:text-[#cff07c] transition-colors">Home</a>
               <a href="#mission" className="hover:text-[#cff07c] transition-colors">Mission</a>
               <a href="#services" className="hover:text-[#cff07c] transition-colors">Services</a>
-              <a href="#media" className="hover:text-[#cff07c] transition-colors">PLANT'D</a>
+              <a href="#contact" className="hover:text-[#cff07c] transition-colors">Contact</a>
               <a
                 href="https://givebutter.com/agud5E"
                 target="_blank" rel="noreferrer"
