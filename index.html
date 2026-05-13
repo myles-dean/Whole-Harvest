@@ -19,7 +19,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Merriweather:wght@700&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -29,8 +29,8 @@
           colors: {
             wh: {
               green: '#1b3f2f',
-              lime: '#cff07c',
-              orange: '#f47920',
+              lime:  '#cff07c',
+              orange:'#f47920',
               cream: '#f9f7f1',
             }
           },
@@ -54,7 +54,7 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'DM Sans', system-ui, sans-serif; background: #f9f7f1; color: #1b3f2f; }
 
-    /* ---------- Loading Animation (preserved from original) ---------- */
+    /* ---------- Loading screen (preserved 1:1 from original) ---------- */
     .loading-container {
       z-index: 1000;
       pointer-events: none;
@@ -80,7 +80,6 @@
       position: absolute;
       bottom: 0;
       left: 0;
-      font-size: calc(10vw + 10vh);
     }
     .loading__progress-inner {
       background-color: var(--light-yellow-green);
@@ -99,7 +98,7 @@
       position: absolute;
       top: .1em;
       bottom: auto;
-      left: 1.23em;
+      left: .23em;
     }
     .loading__number { font-weight: 700; line-height: 1; position: relative; }
     .loading__number-group {
@@ -121,28 +120,28 @@
     }
 
     /* ---------- Kinetic motion ---------- */
-    @keyframes wh-float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-    @keyframes wh-float-y-slow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-22px); } }
-    @keyframes wh-tilt { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
-    @keyframes wh-draw { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
-    .wh-float { animation: wh-float-y 6s ease-in-out infinite; }
-    .wh-float-slow { animation: wh-float-y-slow 9s ease-in-out infinite; }
-    .wh-tilt { animation: wh-tilt 7s ease-in-out infinite; transform-origin: center; }
-    .wh-swoosh path { stroke-dasharray: 600; animation: wh-draw 2.4s cubic-bezier(.65,.05,.36,1) .6s forwards; stroke-dashoffset: 600; }
-
-    .wh-input {
-      width: 100%;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 9999px;
-      padding: 0.85rem 1.25rem;
-      color: white;
-      outline: none;
-      transition: border-color .2s, background .2s;
+    @keyframes wh-bounce-wobble {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25%      { transform: translateY(-5px) rotate(-3deg); }
+      50%      { transform: translateY(0)    rotate(0deg);  }
+      75%      { transform: translateY(-2px) rotate(3deg);  }
     }
-    .wh-input:focus { border-color: #cff07c; background: rgba(255,255,255,0.12); }
-    .wh-input::placeholder { color: rgba(255,255,255,0.45); }
-    textarea.wh-input { border-radius: 1.25rem; min-height: 8rem; resize: vertical; }
+    .hover-wobble:hover { animation: wh-bounce-wobble 0.5s ease-in-out infinite; }
+
+    @keyframes wh-drift-x {
+      0%, 100% { transform: translateX(0); }
+      50%      { transform: translateX(8px); }
+    }
+    .drift { animation: wh-drift-x 6s ease-in-out infinite; }
+
+    @keyframes wh-underline-grow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    .underline-grow {
+      transform-origin: left center;
+      animation: wh-underline-grow 1s ease-out forwards;
+    }
   </style>
 </head>
 <body class="bg-wh-cream text-wh-green antialiased">
@@ -168,178 +167,206 @@
     </div>
   </div>
 
-  <!-- ============== HEADER ============== -->
-  <header class="absolute top-0 left-0 right-0 z-40 px-6 lg:px-12 py-6">
-    <div class="max-w-7xl mx-auto flex items-center justify-between text-white">
-      <a href="#home" class="flex items-center">
-        <img src="images/Whole-Harvest-Logo---No-Icon.svg" alt="Whole Harvest" class="h-10">
-      </a>
-      <nav class="hidden md:flex items-center gap-8 font-medium">
-        <a href="#home" class="hover:text-wh-lime transition-colors">Home</a>
-        <a href="#mission" class="hover:text-wh-lime transition-colors">Mission</a>
-        <a href="#services" class="hover:text-wh-lime transition-colors">Services</a>
-        <a href="#contact" class="hover:text-wh-lime transition-colors">Contact</a>
-        <a href="https://givebutter.com/agud5E" target="_blank" rel="noreferrer"
-           class="px-5 py-2 rounded-full bg-wh-lime text-wh-green font-bold hover:bg-white transition-colors">
-          Donate
-        </a>
-      </nav>
-      <button id="wh-menu-btn" class="md:hidden p-2" aria-label="Toggle menu">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-      </button>
-    </div>
-    <div id="wh-mobile-menu" class="hidden md:hidden mt-4 mx-auto max-w-7xl bg-wh-green/95 backdrop-blur rounded-2xl p-6 text-white">
-      <div class="flex flex-col gap-4 font-medium">
-        <a href="#home">Home</a>
-        <a href="#mission">Mission</a>
-        <a href="#services">Services</a>
-        <a href="#contact">Contact</a>
-        <a href="https://givebutter.com/agud5E" target="_blank" rel="noreferrer" class="inline-block w-fit px-5 py-2 rounded-full bg-wh-lime text-wh-green font-bold">Donate</a>
-      </div>
-    </div>
-  </header>
-
   <!-- ============== HERO ============== -->
-  <section id="home" class="relative w-full min-h-screen overflow-hidden bg-wh-green">
-    <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline poster="videos/IMG-8227-poster-00001.jpg">
-      <source src="videos/IMG-8227-transcode.mp4" type="video/mp4">
-    </video>
-    <div class="absolute inset-0 bg-wh-green/55"></div>
-
-    <div class="relative z-10 flex flex-col items-center justify-center text-center min-h-screen px-6 pt-32 pb-20 text-white">
-      <h1 class="font-extrabold tracking-tight leading-[0.95] text-[clamp(3rem,9vw,7.5rem)]">
-        Helping humans,<br>
-        help
-        <span class="relative inline-block text-wh-lime">
-          humanity!
-          <svg class="wh-swoosh absolute left-0 right-0 -bottom-3 w-full" viewBox="0 0 600 40" fill="none" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M5 28 C 150 8, 450 8, 595 28" stroke="#f47920" stroke-width="6" stroke-linecap="round" fill="none"/>
-          </svg>
-        </span>
-      </h1>
-      <p class="mt-10 max-w-2xl text-lg md:text-xl text-white/90">
-        Join our community-driven PLANT'D program to grow food, share knowledge, and build a sustainable future together.
-      </p>
-      <div class="mt-10 flex flex-wrap gap-4 justify-center">
-        <a href="https://givebutter.com/agud5E" target="_blank" rel="noreferrer"
-           class="px-8 py-4 rounded-full bg-wh-lime text-wh-green font-bold text-lg hover:bg-white transition-colors">
-          Donate Now
-        </a>
-        <a href="https://mercyroadanderson.churchcenter.com/groups/outposts/plant-d" target="_blank" rel="noreferrer"
-           class="px-8 py-4 rounded-full border-2 border-white text-white font-bold text-lg hover:bg-white hover:text-wh-green transition-colors">
-          Volunteer
-        </a>
-      </div>
+  <section id="home" class="relative w-full h-screen min-h-[760px] overflow-hidden bg-wh-green">
+    <div class="absolute inset-0 z-0">
+      <video class="w-full h-full object-cover" autoplay muted loop playsinline poster="videos/IMG-8227-poster-00001.jpg">
+        <source src="videos/IMG-8227-transcode.mp4" type="video/mp4">
+      </video>
+      <div class="absolute inset-0 bg-wh-green/80 mix-blend-multiply"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-wh-green via-transparent to-wh-green/30"></div>
     </div>
 
-    <!-- color stripe divider -->
-    <div class="relative z-10 flex h-3 w-full">
-      <div class="w-2/5 bg-wh-lime"></div>
-      <div class="w-1/5 bg-wh-orange"></div>
-      <div class="w-2/5 bg-wh-cream"></div>
+    <div class="relative z-20 w-full h-full flex flex-col">
+      <!-- Nav -->
+      <header class="w-full px-8 py-6 flex justify-between items-center text-wh-cream">
+        <a href="#home"><img src="images/Whole-Harvest-Logo---No-Icon.svg" alt="Whole Harvest" class="h-10"></a>
+        <nav class="hidden md:flex items-center gap-8 font-medium">
+          <a href="#home" class="hover:text-wh-lime transition-colors">Home</a>
+          <a href="#mission" class="hover:text-wh-lime transition-colors">Mission</a>
+          <a href="#services" class="hover:text-wh-lime transition-colors">Services</a>
+          <a href="#contact" class="hover:text-wh-lime transition-colors">Contact</a>
+          <a href="https://givebutter.com/agud5E" target="_blank" rel="noreferrer"
+             class="px-5 py-2 rounded-full bg-wh-lime text-wh-green font-bold hover:bg-white transition-colors">
+            Donate
+          </a>
+        </nav>
+        <button id="wh-menu-btn" class="md:hidden text-wh-cream" aria-label="Toggle menu">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </header>
+
+      <!-- Mobile menu -->
+      <div id="wh-mobile-menu" class="hidden md:hidden mx-8 mt-2 bg-wh-green/95 backdrop-blur rounded-2xl p-6 text-wh-cream">
+        <div class="flex flex-col gap-4 font-medium">
+          <a href="#home">Home</a><a href="#mission">Mission</a><a href="#services">Services</a><a href="#contact">Contact</a>
+          <a href="https://givebutter.com/agud5E" target="_blank" rel="noreferrer" class="inline-block w-fit px-5 py-2 rounded-full bg-wh-lime text-wh-green font-bold">Donate</a>
+        </div>
+      </div>
+
+      <!-- Hero main -->
+      <main class="flex-1 flex flex-col items-center justify-center text-center px-4 max-w-5xl mx-auto">
+        <div class="space-y-6">
+          <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-wh-cream tracking-tight leading-[1.1]">
+            Helping humans, <br>
+            help
+            <span class="relative inline-block">
+              <span class="relative z-10 text-wh-lime">humanity!</span>
+              <svg class="absolute w-full h-4 -bottom-1 left-0 z-0 text-wh-orange" viewBox="0 0 100 20" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0,10 Q50,20 100,5" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </h1>
+          <p class="text-xl md:text-2xl text-wh-cream/90 max-w-2xl mx-auto font-medium mb-8">
+            Join our community-driven PLANT'D program to grow food, share knowledge, and build a sustainable future together.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <a href="https://givebutter.com/agud5E" target="_blank" rel="noreferrer"
+               class="hover-wobble bg-wh-lime text-wh-green hover:bg-white text-lg font-bold px-10 py-5 rounded-full border-2 border-transparent hover:border-wh-lime transition-all"
+               style="box-shadow: 0 0 40px rgba(207,240,124,0.3);">
+              Donate Now
+            </a>
+            <a href="https://mercyroadanderson.churchcenter.com/groups/outposts/plant-d" target="_blank" rel="noreferrer"
+               class="bg-transparent border-2 border-wh-cream text-wh-cream hover:bg-wh-cream hover:text-wh-green text-lg font-bold px-10 py-5 rounded-full transition-colors">
+              Volunteer
+            </a>
+          </div>
+        </div>
+      </main>
+
+      <!-- Decorative tri-color bar -->
+      <div class="h-4 w-full flex">
+        <div class="h-full flex-1 bg-wh-lime"></div>
+        <div class="h-full flex-1 bg-wh-orange"></div>
+        <div class="h-full flex-1 bg-wh-cream"></div>
+      </div>
     </div>
   </section>
 
   <!-- ============== OUR MEDIA ============== -->
-  <section id="media" class="bg-wh-green text-white py-24 px-6 lg:px-12">
-    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-20">
-      <div class="border-l-4 border-wh-lime pl-8">
-        <p class="uppercase tracking-[0.25em] text-wh-lime text-sm font-bold mb-4">Follow Along</p>
-        <h2 class="font-extrabold text-5xl md:text-6xl mb-6">Our Media</h2>
-        <p class="text-lg text-white/85 leading-relaxed mb-4">
-          Don't be shy and check us out on Instagram for upcoming events, food
-          drives, and to see how we are making impacts in the community!
-        </p>
-        <a href="https://www.instagram.com/wholeharvest2025" target="_blank" rel="noreferrer"
-           class="inline-flex items-center gap-2 mt-4 text-wh-lime font-bold hover:underline">
-          @wholeharvest2025 →
-        </a>
+  <section id="media" class="relative w-full bg-wh-green text-wh-cream px-8 py-24 overflow-hidden">
+    <div class="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-wh-lime/10 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-wh-orange/10 blur-3xl"></div>
+
+    <div class="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
+      <!-- Instagram -->
+      <div class="relative">
+        <div class="absolute -left-3 top-0 h-full w-1 bg-wh-lime"></div>
+        <div class="pl-8">
+          <span class="inline-block text-xs uppercase tracking-[0.25em] text-wh-lime font-bold mb-4">Follow Along</span>
+          <h2 class="text-5xl font-black mb-6 leading-tight">
+            Our
+            <span class="relative inline-block">
+              <span class="relative z-10">Media</span>
+              <span class="absolute left-0 right-0 -bottom-1 h-3 bg-wh-orange/60 -z-0"></span>
+            </span>
+          </h2>
+          <p class="text-lg text-wh-cream/85 mb-8 leading-relaxed">
+            Stay connected with the heart of what's happening at Whole Harvest. From powerful testimonials and community outreach to behind-the-scenes moments at our latest events, you'll find it all on our Instagram. Follow along to see how lives are being impacted and how you can be a part of the story.
+          </p>
+          <a href="https://www.instagram.com/wholeharvest2025" target="_blank" rel="noreferrer"
+             class="hover-wobble inline-flex items-center gap-3 px-6 py-3 rounded-full bg-wh-lime text-wh-green font-bold hover:bg-white transition-colors">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            Instagram
+          </a>
+        </div>
       </div>
-      <div class="border-l-4 border-wh-orange pl-8">
-        <p class="uppercase tracking-[0.25em] text-wh-orange text-sm font-bold mb-4">Articles &amp; Resources</p>
-        <h2 class="font-extrabold text-5xl md:text-6xl mb-6">
-          Articles <span class="text-wh-lime">&amp; Resources</span>
-        </h2>
-        <p class="text-lg text-white/85 leading-relaxed mb-4">
-          Find us on Facebook for community articles, helpful resources, and
-          regular updates from the team.
-        </p>
-        <span class="inline-block mt-4 px-4 py-2 rounded-full bg-white/10 text-white/70 text-sm font-medium">
-          Coming Soon
-        </span>
+
+      <!-- Facebook -->
+      <div class="relative">
+        <div class="absolute -left-3 top-0 h-full w-1 bg-wh-orange"></div>
+        <div class="pl-8">
+          <span class="inline-block text-xs uppercase tracking-[0.25em] text-wh-orange font-bold mb-4">Articles &amp; Resources</span>
+          <h2 class="text-5xl font-black mb-6 leading-tight">
+            Articles <span class="text-wh-lime">&amp;</span> Resources
+          </h2>
+          <p class="text-lg text-wh-cream/85 mb-8 leading-relaxed">
+            Follow along on our Facebook page for helpful articles, thoughtful resources, and updates on what Whole Harvest is doing in the community. We'll also share photos and videos from events, conversations, and real moments along the way. It's a space to stay informed, encouraged, and connected to the heart of our mission.
+          </p>
+          <span class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-transparent border-2 border-wh-cream/40 text-wh-cream/70 font-bold cursor-not-allowed">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Facebook — Coming Soon
+          </span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ============== OUR MISSION ============== -->
-  <section id="mission" class="bg-wh-cream py-24 px-6 lg:px-12">
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-      <div class="relative h-[520px]">
-        <img src="images/Whole-Harvest-7864.jpg" alt="" class="wh-float absolute top-0 left-0 w-3/5 h-72 object-cover rounded-3xl shadow-xl"/>
-        <img src="images/Whole-Harvest-8039.jpg" alt="" class="wh-float-slow absolute top-32 right-0 w-1/2 h-64 object-cover rounded-3xl shadow-xl border-4 border-wh-lime"/>
-        <img src="images/Whole-Harvest-Image.jpg" alt="" class="wh-tilt absolute bottom-0 left-12 w-3/5 h-64 object-cover rounded-3xl shadow-xl"/>
-      </div>
-      <div>
-        <p class="uppercase tracking-[0.25em] text-wh-orange text-sm font-bold mb-4">Why We Exist</p>
-        <h2 class="font-extrabold text-5xl md:text-6xl mb-8 leading-tight">
-          Our <span class="text-wh-orange">Mission</span>
+  <section id="mission" class="w-full bg-wh-cream text-wh-green px-8 py-24">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex items-end justify-between flex-wrap gap-6 mb-12">
+        <h2 class="text-6xl md:text-7xl font-black tracking-tight leading-none">
+          Our
+          <span class="relative inline-block">
+            <span class="relative z-10">Mission</span>
+            <span class="absolute left-0 right-0 -bottom-2 h-4 bg-wh-lime -z-0 underline-grow"></span>
+          </span>
+          <span class="text-wh-orange">.</span>
         </h2>
-        <div class="space-y-6 text-lg leading-relaxed text-wh-green/90">
-          <p>
-            Whole Harvest is a nonprofit dedicated to combating poverty by
-            providing nutritious food and educational resources to those in
-            need. Through our community-driven initiatives, including our
-            PLANT'D gardening program, we work to feed those facing food
-            insecurity while promoting sustainable living and self-sufficiency.
-          </p>
-          <p>
-            We believe that everyone deserves access to wholesome food and the
-            knowledge to grow it. By partnering with local food pantries, soup
-            kitchens, and outreach groups, we deliver fresh produce and teach
-            communities how to cultivate their own gardens — building a more
-            sustainable, nourished future for all.
-          </p>
-        </div>
+        <span class="text-sm uppercase tracking-[0.25em] font-bold text-wh-green/60">
+          People · Food · Education
+        </span>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 mb-12">
+        <img src="images/Whole-Harvest-7864.jpg" alt="" class="drift w-full h-64 object-cover rounded-2xl shadow-lg" style="animation-delay:0s">
+        <img src="images/Whole-Harvest-8039.jpg" alt="" class="drift w-full h-64 object-cover rounded-2xl shadow-lg md:translate-y-6" style="animation-delay:1.5s">
+        <img src="images/Whole-Harvest-Image.jpg" alt="" class="drift w-full h-64 object-cover rounded-2xl shadow-lg" style="animation-delay:3s">
+      </div>
+
+      <div class="max-w-3xl mx-auto text-lg leading-relaxed text-wh-green/85 space-y-4 text-center">
+        <p>
+          In an ever-changing world, one thing has remained the same for centuries, poverty. In the same regard, there are always people to help bridge that gap. That is where Whole Harvest Company is introduced. We would like to provide quality food and educational opportunities to our fellow humans.
+        </p>
+        <p>
+          By providing healthy natural foods, we hope to inspire people to want to begin growing their own, and then help someone else in the same way. There are families everywhere who need help, and it should be our honor as fellow humans to assist where we can.
+        </p>
       </div>
     </div>
   </section>
 
   <!-- ============== OUR SERVICES ============== -->
-  <section id="services" class="bg-wh-green text-white py-24 px-6 lg:px-12">
-    <div class="max-w-7xl mx-auto">
-      <div class="max-w-3xl mb-16">
-        <p class="uppercase tracking-[0.25em] text-wh-lime text-sm font-bold mb-4">What We Do</p>
-        <h2 class="font-extrabold text-5xl md:text-6xl leading-tight">
-          Our <span class="text-wh-lime">Services</span>
-        </h2>
-      </div>
-      <div class="grid lg:grid-cols-3 gap-10">
-        <div class="lg:col-span-2 grid md:grid-cols-2 gap-8">
-          <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
-            <h3 class="font-extrabold text-2xl text-wh-lime mb-5">Produce Deliveries</h3>
-            <ul class="space-y-3 text-white/85">
-              <li class="flex gap-3"><span class="text-wh-orange">•</span><span>Support food pantries</span></li>
-              <li class="flex gap-3"><span class="text-wh-orange">•</span><span>Support soup kitchens</span></li>
-              <li class="flex gap-3"><span class="text-wh-orange">•</span><span>Support outreach groups</span></li>
-              <li class="flex gap-3"><span class="text-wh-orange">•</span><span>Support locally identified individuals</span></li>
+  <section id="services" class="w-full bg-wh-lime text-wh-green px-8 py-24">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-6xl md:text-7xl font-black tracking-tight leading-none mb-12 text-center">
+        Our <span class="italic">Services</span><span class="text-wh-orange">.</span>
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div class="space-y-6">
+          <div class="bg-wh-green text-wh-cream rounded-3xl p-8 shadow-xl">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-full bg-wh-lime text-wh-green flex items-center justify-center font-black">01</div>
+              <h3 class="text-2xl font-black uppercase tracking-wide">Produce Deliveries</h3>
+            </div>
+            <ul class="space-y-2 text-wh-cream/90 text-base leading-relaxed">
+              <li class="flex gap-3"><svg class="mt-1 text-wh-lime shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Support food pantries</li>
+              <li class="flex gap-3"><svg class="mt-1 text-wh-lime shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Support soup kitchens</li>
+              <li class="flex gap-3"><svg class="mt-1 text-wh-lime shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Support outreach groups</li>
+              <li class="flex gap-3"><svg class="mt-1 text-wh-lime shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Support locally identified individuals</li>
             </ul>
           </div>
-          <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
-            <h3 class="font-extrabold text-2xl text-wh-lime mb-5">Educational Assistance</h3>
-            <ul class="space-y-3 text-white/85">
-              <li class="flex gap-3"><span class="text-wh-orange">•</span><span>Identify possibilities</span></li>
-              <li class="flex gap-3"><span class="text-wh-orange">•</span><span>Help create a plan</span></li>
-              <li class="flex gap-3"><span class="text-wh-orange">•</span><span>How to maintain and build</span></li>
-              <li class="flex gap-3"><span class="text-wh-orange">•</span><span>How to help others</span></li>
+
+          <div class="bg-wh-cream text-wh-green rounded-3xl p-8 shadow-xl border-4 border-wh-green">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-full bg-wh-orange text-wh-cream flex items-center justify-center font-black">02</div>
+              <h3 class="text-2xl font-black uppercase tracking-wide">Educational Assistance</h3>
+            </div>
+            <ul class="space-y-2 text-wh-green/90 text-base leading-relaxed">
+              <li class="flex gap-3"><svg class="mt-1 text-wh-orange shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Identify possibilities</li>
+              <li class="flex gap-3"><svg class="mt-1 text-wh-orange shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Help create a plan</li>
+              <li class="flex gap-3"><svg class="mt-1 text-wh-orange shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> How to maintain and build</li>
+              <li class="flex gap-3"><svg class="mt-1 text-wh-orange shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> How to help others</li>
             </ul>
           </div>
         </div>
-        <div class="relative rounded-3xl overflow-hidden min-h-[320px]">
-          <img src="images/Whole-Harvest-7855.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-wh-green via-transparent"></div>
-          <div class="absolute bottom-6 left-6 right-6">
-            <p class="text-wh-lime font-bold uppercase tracking-widest text-xs mb-1">In the Field</p>
-            <p class="text-white text-lg font-semibold">Real food, real community.</p>
+
+        <div class="relative">
+          <div class="absolute -inset-4 bg-wh-green rounded-3xl rotate-2"></div>
+          <img src="images/Whole-Harvest-7855.jpg" alt="" class="relative w-full h-[520px] object-cover rounded-3xl shadow-2xl -rotate-1">
+          <div class="absolute -bottom-4 -right-4 bg-wh-orange text-wh-cream px-5 py-3 rounded-full font-black shadow-lg uppercase tracking-wide text-sm">
+            In the field
           </div>
         </div>
       </div>
@@ -347,58 +374,66 @@
   </section>
 
   <!-- ============== CONTACT ============== -->
-  <section id="contact" class="bg-wh-green text-white py-24 px-6 lg:px-12 border-t border-white/10">
+  <section id="contact" class="w-full bg-wh-green text-wh-cream px-8 py-24">
     <div class="max-w-4xl mx-auto">
       <div class="text-center mb-12">
-        <p class="uppercase tracking-[0.25em] text-wh-orange text-sm font-bold mb-4">Get In Touch</p>
-        <h2 class="font-extrabold text-5xl md:text-6xl">
-          Contact <span class="text-wh-lime">Us</span>
+        <span class="inline-block text-xs uppercase tracking-[0.25em] text-wh-lime font-bold mb-4">Say Hello</span>
+        <h2 class="text-6xl md:text-7xl font-black tracking-tight leading-none">
+          Contact <span class="text-wh-lime">Us</span><span class="text-wh-orange">.</span>
         </h2>
       </div>
 
       <div class="form-block">
         <form id="email-form" name="email-form"
               action="https://formsubmit.co/890a3166b21636896cfcda7d8cfffcfd"
-              method="POST" novalidate>
+              method="POST"
+              class="bg-white/5 backdrop-blur rounded-3xl p-8 md:p-10 border border-white/15 space-y-6"
+              novalidate>
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_subject" value="New contact from your website">
 
-          <div class="grid md:grid-cols-2 gap-5">
-            <div>
-              <label for="name" class="block text-sm font-medium text-white/80 mb-2">Name *</label>
-              <input id="name" name="name" type="text" required class="wh-input" maxlength="256">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label for="name" class="block text-xs uppercase tracking-[0.2em] font-bold text-wh-cream/70">Name*</label>
+              <input id="name" name="name" type="text" required maxlength="256"
+                     class="w-full bg-transparent border-b-2 border-wh-cream/30 px-0 py-3 text-wh-cream placeholder:text-wh-cream/40 focus:outline-none focus:border-wh-lime transition-colors">
             </div>
-            <div>
-              <label for="email" class="block text-sm font-medium text-white/80 mb-2">Email *</label>
-              <input id="email" name="email" type="email" required class="wh-input" maxlength="256">
+            <div class="space-y-2">
+              <label for="email" class="block text-xs uppercase tracking-[0.2em] font-bold text-wh-cream/70">Email*</label>
+              <input id="email" name="email" type="email" required maxlength="256"
+                     class="w-full bg-transparent border-b-2 border-wh-cream/30 px-0 py-3 text-wh-cream placeholder:text-wh-cream/40 focus:outline-none focus:border-wh-lime transition-colors">
             </div>
-            <div>
-              <label for="Phone" class="block text-sm font-medium text-white/80 mb-2">Phone</label>
-              <input id="Phone" name="Phone" type="tel" class="wh-input" maxlength="256">
+            <div class="space-y-2">
+              <label for="Phone" class="block text-xs uppercase tracking-[0.2em] font-bold text-wh-cream/70">Phone</label>
+              <input id="Phone" name="Phone" type="tel" maxlength="256"
+                     class="w-full bg-transparent border-b-2 border-wh-cream/30 px-0 py-3 text-wh-cream placeholder:text-wh-cream/40 focus:outline-none focus:border-wh-lime transition-colors">
             </div>
-            <div>
-              <label for="Company" class="block text-sm font-medium text-white/80 mb-2">Company</label>
-              <input id="Company" name="Company" type="text" class="wh-input" maxlength="256">
+            <div class="space-y-2">
+              <label for="Company" class="block text-xs uppercase tracking-[0.2em] font-bold text-wh-cream/70">Company</label>
+              <input id="Company" name="Company" type="text" maxlength="256"
+                     class="w-full bg-transparent border-b-2 border-wh-cream/30 px-0 py-3 text-wh-cream placeholder:text-wh-cream/40 focus:outline-none focus:border-wh-lime transition-colors">
             </div>
           </div>
-
-          <div class="mt-5">
-            <label for="Message" class="block text-sm font-medium text-white/80 mb-2">Message *</label>
-            <textarea id="Message" name="Message" required class="wh-input" rows="5" maxlength="2000"></textarea>
+          <div class="space-y-2">
+            <label for="Message" class="block text-xs uppercase tracking-[0.2em] font-bold text-wh-cream/70">Message*</label>
+            <textarea id="Message" name="Message" required rows="3" maxlength="2000"
+                      class="w-full bg-transparent border-b-2 border-wh-cream/30 px-0 py-3 text-wh-cream placeholder:text-wh-cream/40 focus:outline-none focus:border-wh-lime transition-colors resize-none"></textarea>
           </div>
 
-          <div class="mt-8 text-center">
+          <div class="flex justify-end pt-2">
             <button type="submit" data-wait="Please wait..."
-                    class="px-10 py-4 rounded-full bg-wh-lime text-wh-green font-bold text-lg hover:bg-white transition-colors">
-              Send Message
+                    class="hover-wobble inline-flex items-center gap-3 px-8 py-4 rounded-full bg-wh-lime text-wh-green font-bold text-lg hover:bg-white transition-colors"
+                    style="box-shadow: 0 0 40px rgba(207,240,124,0.25);">
+              Submit
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
           </div>
         </form>
 
-        <div class="w-form-done mt-8 p-6 rounded-2xl bg-wh-lime/15 border border-wh-lime text-center text-white" style="display:none;">
+        <div class="w-form-done mt-8 p-6 rounded-2xl bg-wh-lime/15 border border-wh-lime text-center text-wh-cream" style="display:none;">
           Thank you! Your submission has been received!
         </div>
-        <div class="w-form-fail mt-8 p-6 rounded-2xl bg-red-500/20 border border-red-400 text-center text-white" style="display:none;">
+        <div class="w-form-fail mt-8 p-6 rounded-2xl bg-red-500/20 border border-red-400 text-center text-wh-cream" style="display:none;">
           Oops! Something went wrong while submitting the form.
         </div>
       </div>
@@ -406,33 +441,33 @@
   </section>
 
   <!-- ============== FOOTER ============== -->
-  <footer class="bg-wh-green text-white border-t border-white/10 py-16 px-6 lg:px-12">
-    <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
-      <div>
-        <img src="images/Side-Logo.svg" alt="Whole Harvest" class="h-12 mb-4">
-        <p class="text-white/70 text-sm leading-relaxed">
+  <footer class="w-full bg-wh-green text-wh-cream border-t border-wh-cream/10 px-8 py-16">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
+      <div class="md:col-span-1">
+        <img src="images/Side-Logo.svg" alt="Whole Harvest" class="h-16 mb-4">
+        <p class="text-sm text-wh-cream/80">
           <span class="text-wh-orange">©</span>
           <span data-current-year>20??</span>
           Whole Harvest Company
-          <span class="block mt-1 text-white/50">Non-Profit 501(c)(3)</span>
+          <span class="text-wh-lime">Non-Profit 501(c)(3)</span>
         </p>
       </div>
       <div>
-        <h4 class="font-bold text-wh-lime uppercase tracking-widest text-sm mb-4">Pages</h4>
-        <ul class="space-y-2 text-white/80">
-          <li><a href="#home" class="hover:text-wh-lime transition-colors">Home</a></li>
-          <li><a href="#mission" class="hover:text-wh-lime transition-colors">Mission</a></li>
+        <h4 class="text-xs uppercase tracking-[0.25em] text-wh-lime font-bold mb-4">Pages</h4>
+        <ul class="space-y-2">
+          <li><a href="#home"     class="hover:text-wh-lime transition-colors">Home</a></li>
+          <li><a href="#mission"  class="hover:text-wh-lime transition-colors">Mission</a></li>
           <li><a href="#services" class="hover:text-wh-lime transition-colors">Services</a></li>
-          <li><a href="#contact" class="hover:text-wh-lime transition-colors">Contact Us</a></li>
+          <li><a href="#contact"  class="hover:text-wh-lime transition-colors">Contact Us</a></li>
         </ul>
       </div>
       <div>
-        <h4 class="font-bold text-wh-lime uppercase tracking-widest text-sm mb-4">Links</h4>
-        <ul class="space-y-2 text-white/80">
+        <h4 class="text-xs uppercase tracking-[0.25em] text-wh-orange font-bold mb-4">Links</h4>
+        <ul class="space-y-2">
           <li><a href="https://givebutter.com/agud5E" target="_blank" rel="noreferrer" class="hover:text-wh-lime transition-colors">Donate</a></li>
           <li><a href="https://mercyroadanderson.churchcenter.com/groups/outposts/plant-d" target="_blank" rel="noreferrer" class="hover:text-wh-lime transition-colors">PLANT'D</a></li>
           <li><a href="https://www.instagram.com/wholeharvest2025" target="_blank" rel="noreferrer" class="hover:text-wh-lime transition-colors">Instagram</a></li>
-          <li><span class="text-white/40">Facebook (coming soon)</span></li>
+          <li><span class="text-wh-cream/50">Facebook</span></li>
         </ul>
       </div>
     </div>
@@ -440,7 +475,7 @@
 
   <!-- ============== SCRIPTS ============== -->
 
-  <!-- Loading animation timeline (preserved) -->
+  <!-- Loading animation timeline (preserved 1:1) -->
   <script>
     function initLoaderThreeSteps() {
       var tl = gsap.timeline();
@@ -467,11 +502,9 @@
     }
     document.addEventListener("DOMContentLoaded", initLoaderThreeSteps);
 
-    // Fade out the loader once the page is loaded
     window.addEventListener('load', function () {
       setTimeout(function () {
-        const elements = document.querySelectorAll('.loading-container');
-        elements.forEach(el => {
+        document.querySelectorAll('.loading-container').forEach(el => {
           el.style.transition = 'opacity 0.5s ease';
           el.style.opacity = '0';
           el.addEventListener('transitionend', function handler() {
@@ -509,27 +542,21 @@
       const form = document.getElementById('email-form');
       if (!form) return;
       const success = form.parentNode.querySelector('.w-form-done');
-      const error = form.parentNode.querySelector('.w-form-fail');
+      const error   = form.parentNode.querySelector('.w-form-fail');
 
       form.addEventListener('submit', function(e) {
         e.preventDefault();
         success.style.display = 'none';
-        error.style.display = 'none';
+        error.style.display   = 'none';
 
         const data = new FormData(form);
-        fetch(form.action, {
-          method: 'POST',
-          body: data,
-          mode: 'no-cors'
-        })
-        .then(() => {
-          form.style.display = 'none';
-          success.style.display = 'block';
-          form.reset();
-        })
-        .catch(() => {
-          error.style.display = 'block';
-        });
+        fetch(form.action, { method: 'POST', body: data, mode: 'no-cors' })
+          .then(() => {
+            form.style.display = 'none';
+            success.style.display = 'block';
+            form.reset();
+          })
+          .catch(() => { error.style.display = 'block'; });
       });
     })();
   </script>
