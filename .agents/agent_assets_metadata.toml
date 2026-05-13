@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "aqzRRUHso42f3kYvwR9bO"
+uri = "file://images/wh-icon.png"
+type = "image"
+title = "Whole Harvest icon (sprout in hand)"
