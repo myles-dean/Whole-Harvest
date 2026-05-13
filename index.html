@@ -192,6 +192,22 @@
     </div>
   </div>
 
+  <script>
+    (function () {
+      var KEY = 'wh_loader_seen_at';
+      var WINDOW_MS = 30 * 60 * 1000;
+      var last = parseInt(localStorage.getItem(KEY) || '0', 10);
+      var now = Date.now();
+      window.__WH_SKIP_LOADER__ = (now - last) < WINDOW_MS;
+      localStorage.setItem(KEY, String(now));
+      if (window.__WH_SKIP_LOADER__) {
+        document.querySelectorAll('.loading-container, .vegetables').forEach(function (el) {
+          el.style.display = 'none';
+        });
+      }
+    })();
+  </script>
+
   <!-- ============== HERO ============== -->
   <section id="home" class="relative w-full h-screen min-h-[760px] overflow-hidden bg-wh-green">
     <div class="absolute inset-0 z-0">
@@ -516,9 +532,9 @@
       tl.to(".loading__number-group.is--third .loading__number-wrap", { yPercent: -90 }, "<");
       tl.to(".loading__number-group.is--first .loading__number-wrap", { yPercent: 0 }, "<");
     }
-    document.addEventListener("DOMContentLoaded", initLoaderThreeSteps);
+    if (!window.__WH_SKIP_LOADER__) document.addEventListener("DOMContentLoaded", initLoaderThreeSteps);
 
-    window.addEventListener('load', function () {
+    if (!window.__WH_SKIP_LOADER__) window.addEventListener('load', function () {
       setTimeout(function () {
         document.querySelectorAll('.vegetables, .loading-container').forEach(el => {
           el.style.transition = 'opacity 0.5s ease';
@@ -591,7 +607,7 @@
       };
       repeat(0, 15);
     }
-    document.addEventListener('DOMContentLoaded', initFalling2DMatterJS);
+    if (!window.__WH_SKIP_LOADER__) document.addEventListener('DOMContentLoaded', initFalling2DMatterJS);
   </script>
 
   <!-- Dynamic year -->
